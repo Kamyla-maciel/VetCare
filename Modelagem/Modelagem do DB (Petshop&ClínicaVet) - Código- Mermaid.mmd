@@ -1,0 +1,56 @@
+erDiagram
+    USUARIO {
+        int id_usuario PK
+        string nome
+        string email UK "email válido"
+        string senha "Senha de 8 digitos com pelo menos 1 carácter especial"
+        string cpf UK "CPF válido (000.000.000-00)"
+        string telefone "00 00000-0000"
+        enum tipo_perfil "cliente, atendente, administrador"
+        boolean ativo
+        datetime criado_em
+    }
+
+    DADOS_PAGAMENTO {
+        int id_pagamento PK
+        int id_usuario FK
+        enum tipo_metodo "cartao_credito, cartao_debito, pix"
+        string detalhes_metodo
+        datetime criado_em
+    }
+
+    PET {
+        int id_pet PK
+        int id_usuario FK "Tutor do Pet"
+        string nome
+        string especie
+        string raca
+        date data_nascimento "00/00/0000"
+        float peso "g ou kg"
+        datetime criado_em 
+    }
+
+    ATENDIMENTO {
+        int id_atendimento PK "id usuário + id gerado para oa tendimento específico"
+        int id_pet FK
+        int id_atendente FK "Atendente/Vet responsavel"
+        enum tipo_servico "consulta_vet, banho_tosa, vacina, outros"
+        datetime tempo "tempo faltante/duração do atendimento"
+        enum status "agendado, em_andamento, concluido, cancelado"
+        text observacoes "descrição feita pelo 'cliente' antes de marcar o atendimento ou pelo atendente/vet após o encerramento do atendimento"
+        datetime criado_em "data da criação do atendimento"
+    }
+
+    LOG_AUDITORIA {
+        int id_log PK
+        int id_usuario FK "Quem executou a acao"
+        string acao "INSERT, UPDATE, DELETE"
+        string tabela_afetada "tabela afetada pela ação de algum usuário"
+        datetime data_hora "data e horário em que o DB sofreu alguma alteração"
+    }
+
+    USUARIO ||--o{ DADOS_PAGAMENTO : "possui (1:N)"
+    USUARIO ||--o{ PET : "e tutor de (N:N)"
+    PET ||--o{ ATENDIMENTO : "recebe (1:N)"
+    USUARIO ||--o{ ATENDIMENTO : "registra/gerencia (1:N)"
+    USUARIO ||--o{ LOG_AUDITORIA : "gera (1:N)"
