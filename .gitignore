@@ -1,0 +1,57 @@
+
+# Ambiente virtual Python
+.venv/
+venv/
+
+# Credenciais e variaveis de ambiente
+.env
+.env.*
+!.env.example
+cypress.env.json
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Bancos locais e backups
+*.db
+*.sqlite
+*.sqlite3
+*.backup
+*.bak
+
+# Scripts SQL nao destinados a entrega
+database/schema.sql
+database/schema_estrutura.sql
+
+# Dependencias Node.js
+node_modules/
+
+# Resultados dos testes
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+.coverage
+htmlcov/
+
+# Configuracoes locais
+.vscode/
+.idea/
+
+# Arquivos temporarios
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Repositorio separado
+vetcare-publico/
+
+# Scripts auxiliares de desenvolvimento
+teste_conexao.py
+teste_login_vacinacao.py
+teste_supabase.py
+tests/test_api_antigo.txt
+tests/verificar_conexao.py

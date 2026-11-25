@@ -1,0 +1,1873 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Vet Care | Sistema de Gestão Veterinária</title>
+
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="sem-login">
+
+    <!-- =====================================
+         TELA DE LOGIN
+    ====================================== -->
+
+    <section id="tela-login" class="tela-login">
+        <form id="form-login" class="login-cartao">
+
+            <img
+                src="/static/logo-vetcare.jpg"
+                alt="Vet Care"
+                class="login-logo"
+            >
+
+            <h1>Bem-vindo ao Vet Care</h1>
+            <p>Entre com sua conta de funcionário</p>
+
+            <label>
+                E-mail
+                <input
+                    name="email"
+                    type="email"
+                    autocomplete="username"
+                    required
+                >
+            </label>
+
+            <label>
+                Senha
+                <input
+                    name="senha"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                >
+            </label>
+
+            <p
+                id="erro-login"
+                role="alert"
+                class="login-erro"
+            ></p>
+
+            <button type="submit">
+                Entrar no sistema
+            </button>
+
+            <div class="cadastro-funcionario-link">
+                <p>Ainda não possui uma conta?</p>
+
+                <button
+                    type="button"
+                    id="abrir-cadastro-funcionario"
+                    class="secundario"
+                >
+                    Solicitar cadastro
+                </button>
+            </div>
+
+        </form>
+    </section>
+
+
+    <!-- =====================================
+         TELA DE ABERTURA
+    ====================================== -->
+
+    <div
+        id="abertura"
+        class="abertura"
+        aria-label="Carregando Vet Care"
+    >
+        <div class="abertura-marca">
+
+            <img
+                src="/static/logo-vetcare.jpg"
+                alt="Vet Care — Sistema de Gestão Veterinária"
+            >
+
+            <span>
+                Seu espaço de cuidado e organização
+            </span>
+
+        </div>
+    </div>
+
+
+    <!-- =====================================
+         MENU LATERAL
+    ====================================== -->
+
+    <aside class="sidebar">
+
+        <div class="marca">
+
+            <img
+                src="/static/logo-vetcare.jpg"
+                alt="Logo Vet Care"
+            >
+
+            <div>
+                <strong>
+                    Vet<span>Care</span>
+                </strong>
+
+                <small>Gestão veterinária</small>
+            </div>
+
+        </div>
+
+        <div class="menu-legenda">
+            MENU PRINCIPAL
+        </div>
+
+<button
+    type="button"
+    id="menu-funcionarios"
+    data-pagina="funcionarios"
+    class="nav"
+    hidden
+>
+    Gerenciar funcionários
+</button>
+
+        <nav aria-label="Menu principal">
+
+            <button
+                type="button"
+                data-pagina="dashboard"
+                class="nav ativo"
+            >
+                Início
+            </button>
+
+            <button
+                type="button"
+                data-pagina="animais"
+                class="nav"
+            >
+                Animais
+            </button>
+
+            <button
+                type="button"
+                data-pagina="tutores"
+                class="nav"
+            >
+                Tutores
+            </button>
+
+            <button
+                type="button"
+                data-pagina="vinculos"
+                class="nav"
+            >
+                Responsáveis
+            </button>
+
+            <button type="button" data-pagina="consultas" class="nav">
+                Consultas
+            </button>
+
+            <button type="button" data-pagina="vacinacoes" class="nav">
+                Vacinações
+            </button>
+
+            <button type="button" data-pagina="exames" class="nav">
+                Exames
+            </button>
+            <button type="button" data-pagina="estoque" class="nav">
+                Estoque de medicamentos
+            </button>
+
+            <button
+                type="button"
+                data-pagina="prontuarios"
+                class="nav"
+            >
+                Prontuários
+            </button>
+
+            <button type="button" data-pagina="solicitacoes" class="nav" id="menu-solicitacoes" hidden>
+                Solicitações de cadastro
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =====================================
+         CONTEÚDO PRINCIPAL
+    ====================================== -->
+
+    <main class="conteudo">
+
+        <!-- CABEÇALHO -->
+
+        <header class="topbar">
+
+            <div>
+                <div class="eyebrow">
+                    SISTEMA DE GESTÃO VETERINÁRIA
+                </div>
+
+                <h1 id="titulo-pagina">
+                    Início
+                </h1>
+
+                <p>
+                    Organização e cuidado em cada atendimento
+                </p>
+            </div>
+
+            <div class="topbar-identidade">
+
+                <img
+                    src="/static/favicon.png"
+                    alt="Vet Care"
+                >
+
+                <span id="nome-funcionario">
+                    Vet Care
+                </span>
+
+                <button
+                    id="botao-sair"
+                    type="button"
+                    class="botao-sair"
+                >
+                    Sair
+                </button>
+
+            </div>
+
+        </header>
+
+        <p id="aviso" role="status"></p>
+
+
+        <!-- =====================================
+             PÁGINA INICIAL
+        ====================================== -->
+
+        <section
+            id="pagina-dashboard"
+            class="pagina"
+        >
+
+            <div class="boas-vindas">
+
+                <div class="boas-texto">
+
+                    <div class="pill">
+                        BEM-VINDO AO VET CARE
+                    </div>
+
+                    <h2>
+                        <span id="saudacao-funcionario">
+                            Mais cuidado.
+                        </span>
+
+                        <em>Mais organização.</em>
+                    </h2>
+
+                    <p>
+                        <span id="cargo-funcionario"></span>
+                        Um ambiente pensado para facilitar
+                        a rotina da clínica, acompanhar
+                        seus pacientes e manter os
+                        responsáveis sempre por perto.
+                    </p>
+
+                    <div class="atalhos">
+
+                        <button
+                            type="button"
+                            data-ir="animais"
+                        >
+                            Ver animais
+                            <span>→</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            data-ir="tutores"
+                            class="secundario"
+                        >
+                            Ver tutores
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="boas-imagem">
+
+                    <img
+                        src="/static/logo-vetcare.jpg"
+                        alt="Vet Care — Sistema de Gestão Veterinária"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- RESUMO DA CLÍNICA -->
+
+            <div class="resumo-titulo">
+
+                <div>
+                    <span class="eyebrow">
+                        VISÃO GERAL
+                    </span>
+
+                    <h2>
+                        Seu espaço de trabalho
+                    </h2>
+                </div>
+
+                <p>
+                    Informações atualizadas da clínica
+                </p>
+
+            </div>
+
+            <div class="cards">
+
+                <article>
+                    <div class="card-icone">🐾</div>
+
+                    <h3>Animais cadastrados</h3>
+
+                    <strong id="total-pets">—</strong>
+
+                    <span>Pacientes ativos</span>
+                </article>
+
+                <article>
+                    <div class="card-icone">👤</div>
+
+                    <h3>Tutores cadastrados</h3>
+
+                    <strong id="total-tutores">—</strong>
+
+                    <span>Responsáveis ativos</span>
+                </article>
+
+                <article>
+                    <div class="card-icone">♡</div>
+
+                    <h3>Relações de cuidado</h3>
+
+                    <strong id="total-vinculos">—</strong>
+
+                    <span>Vínculos registrados</span>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PÁGINA DE ANIMAIS
+        ====================================== -->
+
+        <section
+            id="pagina-animais"
+            class="pagina"
+            hidden
+        >
+
+            <div class="painel">
+
+                <div class="cabecalho">
+
+                    <div>
+                        <span class="eyebrow">
+                            PACIENTES
+                        </span>
+
+                        <h2>Animais cadastrados</h2>
+
+                        <p>
+                            Consulte e organize os pacientes
+                            da clínica.
+                        </p>
+                    </div>
+
+                    <button
+                        id="novo-pet"
+                        type="button"
+                    >
+                        + Cadastrar animal
+                    </button>
+
+                </div>
+
+                <div class="tabela">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Espécie</th>
+                                <th>Raça</th>
+                                <th>Sexo</th>
+                                <th>Peso</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="lista-pets"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PÁGINA DE TUTORES
+        ====================================== -->
+
+        <section
+            id="pagina-tutores"
+            class="pagina"
+            hidden
+        >
+
+            <div class="painel">
+
+                <div class="cabecalho">
+
+                    <div>
+                        <span class="eyebrow">
+                            RESPONSÁVEIS
+                        </span>
+
+                        <h2>Tutores cadastrados</h2>
+
+                        <p>
+                            Informações dos responsáveis
+                            pelos animais.
+                        </p>
+                    </div>
+
+                    <button
+                        id="novo-tutor"
+                        type="button"
+                    >
+                        + Cadastrar tutor
+                    </button>
+
+                </div>
+
+                <div class="tabela">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>E-mail</th>
+                                <th>Telefone</th>
+                                <th>Endereço</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="lista-tutores"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PÁGINA DE RESPONSÁVEIS
+        ====================================== -->
+
+        <section
+            id="pagina-vinculos"
+            class="pagina"
+            hidden
+        >
+
+            <div class="painel">
+
+                <div class="cabecalho">
+
+                    <div>
+                        <span class="eyebrow">
+                            VÍNCULOS
+                        </span>
+
+                        <h2>
+                            Responsáveis pelos animais
+                        </h2>
+
+                        <p>
+                            Gerencie a relação entre
+                            pacientes e tutores.
+                        </p>
+                    </div>
+
+                    <button
+                        id="novo-vinculo"
+                        type="button"
+                    >
+                        + Vincular tutor
+                    </button>
+
+                </div>
+
+                <div class="tabela">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Animal</th>
+                                <th>Tutor</th>
+                                <th>Principal</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="lista-vinculos"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PÁGINA DE CONSULTAS
+        ====================================== -->
+
+        <section
+            id="pagina-consultas"
+            class="pagina"
+            hidden
+        >
+
+            <div class="painel">
+
+                <div class="cabecalho">
+
+                    <div>
+                        <span class="eyebrow">
+                            ATENDIMENTOS
+                        </span>
+
+                        <h2>
+                            Consultas veterinárias
+                        </h2>
+
+                        <p>
+                            Organize e acompanhe
+                            os agendamentos.
+                        </p>
+                    </div>
+
+                    <button
+                        id="nova-consulta"
+                        type="button"
+                    >
+                        + Agendar consulta
+                    </button>
+
+                </div>
+
+                <div class="tabela">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Animal</th>
+                                <th>Tutor</th>
+                                <th>Veterinário</th>
+                                <th>Data</th>
+                                <th>Horário</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="lista-consultas">
+
+                            <tr>
+                                <td colspan="7">
+                                    Carregando consultas...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+<!-- =====================================
+     PÁGINA DE VACINAÇÕES
+====================================== -->
+
+<section id="pagina-vacinacoes" class="pagina" hidden>
+    <div class="painel">
+
+        <div class="cabecalho">
+            <div>
+                <span class="eyebrow">SAÚDE PREVENTIVA</span>
+                <h2>Vacinações dos animais</h2>
+                <p>
+                    Consulte e acompanhe as vacinas
+                    aplicadas nos pacientes da clínica.
+                </p>
+            </div>
+
+            <button id="nova-vacinacao" type="button">
+                + Cadastrar vacinação
+            </button>
+        </div>
+
+        <div class="tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Animal</th>
+                        <th>Vacina</th>
+                        <th>Aplicação</th>
+                        <th>Próxima dose</th>
+                        <th>Lote</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lista-vacinacoes">
+                    <tr>
+                        <td colspan="7">
+                            Carregando vacinações...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+        <!-- =====================================
+             PÁGINA DE PRONTUÁRIOS
+        ====================================== -->
+
+<!-- =====================================
+     PÁGINA DE EXAMES
+====================================== -->
+
+
+<!-- ESTOQUE DE MEDICAMENTOS -->
+<section id="pagina-estoque" class="pagina" hidden>
+  <div class="estoque-hero">
+    <div>
+      <span class="estoque-kicker">CONTROLE DE SUPRIMENTOS • VET CARE</span>
+      <h2>Estoque de medicamentos</h2>
+      <p>Visão clara dos medicamentos, quantidades disponíveis e prazos de validade.</p>
+    </div>
+    <button type="button" id="estoque-novo" class="estoque-adicionar" hidden>+ Adicionar medicamento</button>
+  </div>
+
+  <div class="estoque-indicadores" aria-label="Resumo do estoque">
+    <article><span>Medicamentos cadastrados</span><strong id="estoque-total">—</strong><small>Itens no catálogo</small></article>
+    <article><span>Estoque baixo</span><strong id="estoque-baixo">—</strong><small>Reposição necessária</small></article>
+    <article><span>Validade próxima</span><strong id="estoque-proximos">—</strong><small>Nos próximos 30 dias</small></article>
+    <article><span>Vencidos</span><strong id="estoque-vencidos">—</strong><small>Verificar antes do uso</small></article>
+  </div>
+
+  <div class="estoque-painel">
+    <div class="estoque-toolbar">
+      <div><h3>Catálogo de medicamentos</h3><p>Pesquise e acompanhe a situação de cada item.</p></div>
+      <div class="estoque-filtros">
+        <input id="estoque-busca" type="search" placeholder="Buscar nome, categoria ou lote" aria-label="Buscar medicamentos">
+        <select id="estoque-filtro" aria-label="Filtrar situação">
+          <option value="todos">Todos os itens</option>
+          <option value="baixo">Estoque baixo</option>
+          <option value="proximo">Validade próxima</option>
+          <option value="vencido">Vencidos</option>
+          <option value="normal">Em dia</option>
+        </select>
+      </div>
+    </div>
+    <div class="estoque-tabela-wrap">
+      <table class="estoque-tabela">
+        <thead><tr><th>Medicamento</th><th>Lote</th><th>Quantidade</th><th>Validade</th><th>Situação</th><th class="estoque-col-acoes" hidden>Ações</th></tr></thead>
+        <tbody id="estoque-lista"><tr><td colspan="6">Abra o estoque para carregar os medicamentos.</td></tr></tbody>
+      </table>
+    </div>
+    <p class="estoque-rodape" id="estoque-contagem"></p>
+  </div>
+</section>
+
+<section id="pagina-exames" class="pagina" hidden>
+    <div class="painel">
+
+        <div class="cabecalho">
+            <div>
+                <span class="eyebrow">DIAGNÓSTICOS</span>
+                <h2>Exames veterinários</h2>
+                <p>
+                    Registre solicitações, acompanhe
+                    os exames e seus resultados.
+                </p>
+            </div>
+
+            <button id="novo-exame" type="button" hidden>
+                + Cadastrar exame
+            </button>
+        </div>
+
+        <div class="tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Animal</th>
+                        <th>Exame</th>
+                        <th>Solicitação</th>
+                        <th>Realização</th>
+                        <th>Status</th>
+                        <th>Resultado</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lista-exames">
+                    <tr>
+                        <td colspan="8">
+                            Abra a página para carregar os exames.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+        <section
+            id="pagina-prontuarios"
+            class="pagina"
+            hidden
+        >
+
+            <div class="painel">
+
+                <div class="cabecalho">
+
+                    <div>
+                        <span class="eyebrow">
+                            HISTÓRICO CLÍNICO
+                        </span>
+
+                        <h2>
+                            Prontuários veterinários
+                        </h2>
+
+                        <p>
+                            Consulte os atendimentos,
+                            diagnósticos e orientações
+                            registrados para cada animal.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- SELEÇÃO DO ANIMAL -->
+
+                <div class="campo">
+
+                    <label for="prontuario-pet">
+                        Selecione o animal
+                    </label>
+
+                    <select id="prontuario-pet">
+
+                        <option value="">
+                            Selecione um animal
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="botoes">
+
+                    <button
+                        id="buscar-prontuario"
+                        type="button"
+                    >
+                        Consultar prontuário
+                    </button>
+
+                </div>
+
+                <p
+                    id="erro-prontuario"
+                    role="alert"
+                ></p>
+
+
+                <!-- DADOS DO PRONTUÁRIO -->
+
+                <div
+                    id="dados-prontuario"
+                    hidden
+                >
+
+                    <div class="resumo-titulo">
+
+                        <div>
+                            <span class="eyebrow">
+                                IDENTIFICAÇÃO
+                            </span>
+
+                            <h2>
+                                Dados do animal
+                            </h2>
+                        </div>
+
+                    </div>
+
+                    <div class="cards">
+
+                        <article>
+                            <h3>Nome</h3>
+
+                            <strong id="prontuario-nome">
+                                —
+                            </strong>
+                        </article>
+
+                        <article>
+                            <h3>Espécie</h3>
+
+                            <strong id="prontuario-especie">
+                                —
+                            </strong>
+                        </article>
+
+                        <article>
+                            <h3>Raça</h3>
+
+                            <strong id="prontuario-raca">
+                                —
+                            </strong>
+                        </article>
+
+                    </div>
+
+
+                    <!-- HISTÓRICO CLÍNICO -->
+
+                    <div class="resumo-titulo">
+
+                        <div>
+                            <span class="eyebrow">
+                                ATENDIMENTOS
+                            </span>
+
+                            <h2>
+                                Histórico clínico
+                            </h2>
+                        </div>
+
+                    </div>
+
+                    <div class="tabela">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Veterinário</th>
+                                    <th>Motivo</th>
+                                    <th>Diagnóstico</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="lista-prontuario">
+
+                                <tr>
+                                    <td colspan="6">
+                                        Selecione um animal
+                                        para consultar o histórico.
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SOLICITAÇÕES DE CADASTRO - ADMINISTRADOR -->
+        <section id="pagina-solicitacoes" class="pagina" hidden>
+            <div class="painel">
+                <div class="cabecalho">
+                    <div>
+                        <span class="eyebrow">ADMINISTRAÇÃO</span>
+                        <h2>Solicitações de cadastro</h2>
+                        <p>Confira os dados e valide o CRMV antes de aprovar.</p>
+                    </div>
+                    <button type="button" id="atualizar-solicitacoes">Atualizar lista</button>
+                </div>
+                <p id="erro-solicitacoes" role="alert"></p>
+                <div class="tabela">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th><th>Perfil</th><th>E-mail</th>
+                                <th>CPF</th><th>Telefone</th><th>CRMV</th>
+                                <th>Data</th><th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-solicitacoes">
+                            <tr><td colspan="8">Carregue as solicitações pendentes.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+<section
+    id="pagina-funcionarios"
+    class="pagina"
+    hidden
+>
+    <div class="painel">
+        <div class="cabecalho">
+            <div>
+                <span class="eyebrow">
+                    ADMINISTRAÇÃO
+                </span>
+
+                <h2>Gerenciar funcionários</h2>
+
+                <p>
+                    Consulte e gerencie os funcionários
+                    cadastrados na clínica.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                id="atualizar-funcionarios"
+            >
+                Atualizar
+            </button>
+        </div>
+
+        <div class="campo">
+            <label for="pesquisa-funcionarios">
+                Pesquisar funcionário
+            </label>
+
+            <input
+                type="search"
+                id="pesquisa-funcionarios"
+                placeholder="Nome ou e-mail"
+            >
+        </div>
+
+        <p id="erro-funcionarios" role="alert"></p>
+
+        <div class="tabela">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Perfil</th>
+                        <th>CRMV</th>
+                        <th>Situação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lista-funcionarios"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+
+    <!-- =====================================
+         FORMULÁRIO DE ANIMAIS
+    ====================================== -->
+
+    <dialog id="dialog-pet">
+
+        <form id="form-pet">
+
+            <h2 id="titulo-form-pet">
+                Cadastrar animal
+            </h2>
+
+            <label>
+                Nome
+                <input
+                    name="nome"
+                    required
+                    maxlength="100"
+                >
+            </label>
+
+            <label>
+                Espécie
+
+                <select
+                    id="especie"
+                    name="especie"
+                    required
+                >
+                    <option value="">
+                        Selecione a espécie
+                    </option>
+
+                    <option value="Cachorro">Cachorro</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Coelho">Coelho</option>
+                    <option value="Ave">Ave</option>
+                    <option value="Hamster">Hamster</option>
+                    <option value="Porquinho-da-índia">
+                        Porquinho-da-índia
+                    </option>
+                    <option value="Réptil">Réptil</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </label>
+
+            <label>
+                Raça
+
+                <select
+                    id="raca"
+                    name="raca"
+                >
+                    <option value="">
+                        Selecione primeiro a espécie
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Sexo
+
+                <select name="sexo">
+                    <option value="indefinido">
+                        Indefinido
+                    </option>
+
+                    <option value="macho">
+                        Macho
+                    </option>
+
+                    <option value="femea">
+                        Fêmea
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Nascimento
+
+                <input
+                    type="date"
+                    name="data_nascimento"
+                >
+            </label>
+
+            <label>
+                Peso (kg)
+
+                <input
+                    type="number"
+                    name="peso"
+                    min="0"
+                    step="0.01"
+                >
+            </label>
+
+<div class="campo-foto-pet">
+    <label for="foto-pet">
+        Foto do animal
+    </label>
+
+    <input
+        type="file"
+        id="foto-pet"
+        name="foto"
+        accept="image/jpeg,image/png,image/webp"
+    >
+
+    <img
+        id="preview-foto-pet"
+        alt="Prévia da foto do animal"
+        style="display: none; width: 130px; height: 130px;
+               object-fit: cover; border-radius: 12px;
+               margin-top: 12px;"
+    >
+</div>
+
+            <div class="botoes">
+
+                <button
+                    type="button"
+                    class="secundario"
+                    data-fechar
+                >
+                    Cancelar
+                </button>
+
+                <button type="submit">
+                    Salvar animal
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- =====================================
+         FORMULÁRIO DE TUTORES
+    ====================================== -->
+
+    <dialog id="dialog-tutor">
+
+        <form id="form-tutor">
+
+            <h2 id="titulo-form-tutor">
+                Cadastrar tutor
+            </h2>
+
+            <label>
+                Nome completo
+
+                <input
+                    name="nome"
+                    required
+                    minlength="2"
+                    maxlength="100"
+                >
+            </label>
+
+            <label>
+                CPF
+
+                <input
+                    name="cpf"
+                    required
+                    minlength="11"
+                    maxlength="14"
+                >
+            </label>
+
+            <label>
+                E-mail
+
+                <input
+                    type="email"
+                    name="email"
+                >
+            </label>
+
+            <label>
+                Telefone
+
+                <input
+                    name="telefone"
+                    required
+                    minlength="8"
+                    maxlength="20"
+                >
+            </label>
+
+            <label>
+                Endereço
+
+                <input
+                    name="endereco"
+                    maxlength="255"
+                >
+            </label>
+
+            <div class="botoes">
+
+                <button
+                    type="button"
+                    class="secundario"
+                    data-fechar
+                >
+                    Cancelar
+                </button>
+
+                <button type="submit">
+                    Salvar tutor
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- =====================================
+         FORMULÁRIO DE VÍNCULOS
+    ====================================== -->
+
+    <dialog id="dialog-vinculo">
+
+        <form id="form-vinculo">
+
+            <h2>
+                Vincular tutor ao animal
+            </h2>
+
+            <label>
+                Animal
+
+                <select
+                    name="id_pet"
+                    id="selecao-pet"
+                    required
+                ></select>
+            </label>
+
+            <label>
+                Tutor
+
+                <select
+                    name="id_tutor"
+                    id="selecao-tutor"
+                    required
+                ></select>
+            </label>
+
+            <label class="check">
+
+                <input
+                    type="checkbox"
+                    name="tutor_principal"
+                >
+
+                Definir como tutor principal
+            </label>
+
+            <div class="botoes">
+
+                <button
+                    type="button"
+                    class="secundario"
+                    data-fechar
+                >
+                    Cancelar
+                </button>
+
+                <button type="submit">
+                    Salvar vínculo
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- =====================================
+         CADASTRO DE FUNCIONÁRIOS
+    ====================================== -->
+
+    <dialog id="dialog-cadastro-funcionario">
+
+        <h2>Solicitar cadastro</h2>
+
+        <p>
+            Preencha seus dados para solicitar
+            acesso ao sistema Vet Care.
+        </p>
+
+        <form id="form-cadastro-funcionario">
+
+            <label>
+                Função na clínica
+                <select name="perfil" id="cadastro-perfil" required>
+                    <option value="atendente">Atendente / Funcionário</option>
+                    <option value="veterinario">Veterinário</option>
+                </select>
+            </label>
+
+            <label id="campo-cadastro-crmv" hidden>
+                CRMV
+                <input type="text" name="crmv" id="cadastro-crmv"
+                       maxlength="30" placeholder="Ex.: CRMV-PE 12345" disabled>
+            </label>
+
+
+            <label>
+                Nome completo
+
+                <input
+                    type="text"
+                    name="nome"
+                    required
+                    minlength="2"
+                    maxlength="100"
+                >
+            </label>
+
+            <label>
+                CPF
+
+                <input
+                    type="text"
+                    name="cpf"
+                    required
+                    maxlength="14"
+                    placeholder="000.000.000-00"
+                >
+            </label>
+
+            <label>
+                E-mail
+
+                <input
+                    type="email"
+                    name="email"
+                    required
+                >
+            </label>
+
+            <label>
+                Telefone
+
+                <input
+                    type="tel"
+                    name="telefone"
+                    placeholder="(00) 00000-0000"
+                >
+            </label>
+
+            <label>
+                Senha
+
+                <input
+                    type="password"
+                    name="senha"
+                    required
+                    minlength="12"
+                    autocomplete="new-password"
+                >
+            </label>
+
+            <label>
+                Confirmar senha
+
+                <input
+                    type="password"
+                    name="confirmar_senha"
+                    required
+                    minlength="12"
+                    autocomplete="new-password"
+                >
+            </label>
+
+            <p
+                id="erro-cadastro-funcionario"
+                role="alert"
+            ></p>
+
+            <div class="botoes">
+
+                <button
+                    type="button"
+                    class="secundario"
+                    id="cancelar-cadastro-funcionario"
+                >
+                    Cancelar
+                </button>
+
+                <button type="submit">
+                    Enviar solicitação
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- =====================================
+         FORMULÁRIO DE CONSULTAS
+    ====================================== -->
+
+<!-- FORMULÁRIO DE VACINAÇÃO -->
+<dialog id="dialog-vacinacao">
+    <form id="form-vacinacao">
+        <h2 id="titulo-form-vacinacao">
+            Cadastrar vacinação
+        </h2>
+
+        <label>
+            Animal
+            <select name="id_pet" id="vacinacao-pet" required>
+                <option value="">Selecione o animal</option>
+            </select>
+        </label>
+
+       
+<label>
+    Nome da vacina
+
+    <select name="nome_vacina" id="vacinacao-nome" required>
+        <option value="">Selecione uma vacina</option>
+
+        <optgroup label="Vacinas para cães">
+            <option value="V8">V8 (Polivalente)</option>
+            <option value="V10">V10 (Polivalente)</option>
+            <option value="Gripe Canina">Gripe Canina</option>
+            <option value="Giárdia">Giárdia</option>
+            <option value="Leishmaniose">Leishmaniose</option>
+        </optgroup>
+
+        <optgroup label="Vacinas para gatos">
+            <option value="V3 Felina">V3 (Tríplice Felina)</option>
+            <option value="V4 Felina">V4 (Quádrupla Felina)</option>
+            <option value="V5 Felina">V5 (Quíntupla Felina)</option>
+            <option value="FeLV">Leucemia Felina (FeLV)</option>
+        </optgroup>
+
+        <optgroup label="Vacinas gerais">
+            <option value="Antirrábica">Antirrábica (Raiva)</option>
+        </optgroup>
+
+        <option value="Outra">Outra vacina</option>
+    </select>
+</label>
+
+
+        <label>
+            Data da aplicação
+            <input type="date" name="data_aplicacao" required>
+        </label>
+
+        <label>
+            Próxima dose
+            <input type="date" name="proxima_dose">
+        </label>
+
+        <label>
+            Lote
+            <input type="text" name="lote" maxlength="50">
+        </label>
+
+        <label>
+            Observações
+            <textarea name="observacoes" rows="3"></textarea>
+        </label>
+
+        <p id="erro-vacinacao" role="alert"></p>
+
+        <div class="botoes">
+            <button
+                type="button"
+                class="secundario"
+                id="cancelar-form-vacinacao"
+            >
+                Cancelar
+            </button>
+
+            <button type="submit">
+                Salvar vacinação
+            </button>
+        </div>
+    </form>
+</dialog>
+
+    <dialog id="dialog-consulta">
+
+        <form id="form-consulta">
+
+            <h2 id="titulo-form-consulta">
+                Agendar consulta
+            </h2>
+
+            <label>
+                Animal
+
+                <select
+                    id="consulta-pet"
+                    name="id_pet"
+                    required
+                >
+                    <option value="">
+                        Selecione o animal
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Tutor responsável
+
+                <select
+                    id="consulta-tutor"
+                    name="id_tutor"
+                    required
+                >
+                    <option value="">
+                        Selecione o tutor
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Veterinário
+
+                <select
+                    id="consulta-veterinario"
+                    name="id_veterinario"
+                    required
+                >
+                    <option value="">
+                        Selecione o veterinário
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Data da consulta
+
+                <input
+                    type="date"
+                    name="data_consulta"
+                    required
+                >
+            </label>
+
+            <label>
+                Horário
+
+                <input
+                    type="time"
+                    name="horario"
+                    required
+                >
+            </label>
+
+            <label>
+                Motivo da consulta
+
+                <textarea
+                    name="motivo"
+                    rows="3"
+                    required
+                ></textarea>
+            </label>
+
+            <label>
+                Observações
+
+                <textarea
+                    name="observacoes"
+                    rows="3"
+                ></textarea>
+            </label>
+
+            <p
+                id="erro-consulta"
+                role="alert"
+            ></p>
+
+            <div class="botoes">
+
+                <button
+                    type="button"
+                    class="secundario"
+                    id="cancelar-form-consulta"
+                >
+                    Cancelar
+                </button>
+
+                <button type="submit">
+                    Salvar consulta
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+<!-- =====================================
+     FORMULÁRIO DE EXAMES
+====================================== -->
+
+<dialog id="dialog-exame">
+    <form id="form-exame">
+
+        <h2 id="titulo-form-exame">
+            Cadastrar exame
+        </h2>
+
+        <label>
+            Animal
+            <select name="id_pet" id="exame-pet" required>
+                <option value="">
+                    Selecione o animal
+                </option>
+            </select>
+        </label>
+
+        <label>
+            Tipo de exame
+            <input
+                name="tipo_exame"
+                maxlength="100"
+                required
+                placeholder="Ex.: Hemograma"
+            >
+        </label>
+
+        <label>
+            Data da solicitação
+            <input
+                type="date"
+                name="data_solicitacao"
+                required
+            >
+        </label>
+
+        <label>
+            Data da realização
+            <input
+                type="date"
+                name="data_realizacao"
+            >
+        </label>
+
+        <label>
+            Status
+            <select name="status_exame" required>
+                <option value="solicitado">Solicitado</option>
+                <option value="agendado">Agendado</option>
+                <option value="realizado">Realizado</option>
+                <option value="cancelado">Cancelado</option>
+            </select>
+        </label>
+
+        <label>
+            Resultado
+            <textarea
+                name="resultado"
+                rows="3"
+                placeholder="Preencha quando disponível"
+            ></textarea>
+        </label>
+
+        <label>
+            Observações
+            <textarea
+                name="observacoes"
+                rows="3"
+            ></textarea>
+        </label>
+
+        <p id="erro-exame" role="alert"></p>
+
+        <div class="botoes">
+            <button
+                type="button"
+                class="secundario"
+                id="cancelar-form-exame"
+            >
+                Cancelar
+            </button>
+
+            <button type="submit">
+                Salvar exame
+            </button>
+        </div>
+
+    </form>
+</dialog>
+
+
+<dialog id="estoque-dialog" class="estoque-dialog">
+  <form id="estoque-form">
+    <div class="estoque-dialog-topo"><span>GESTÃO ADMINISTRATIVA</span><h2 id="estoque-form-titulo">Adicionar medicamento</h2><p>Preencha os dados do medicamento para atualizar o estoque.</p></div>
+    <div class="estoque-form-grid">
+      <label class="estoque-largo">Nome do medicamento <input name="nome" maxlength="150" required placeholder="Ex.: Medicamento veterinário"></label>
+      <label>Categoria <input name="categoria" maxlength="100" placeholder="Ex.: Antibiótico"></label>
+      <label>Fabricante <input name="fabricante" maxlength="120"></label>
+      <label>Lote <input name="lote" maxlength="60"></label>
+      <label>Data de validade <input name="data_validade" type="date"></label>
+      <label>Quantidade <input name="quantidade" type="number" min="0" step="1" required value="0"></label>
+      <label>Estoque mínimo <input name="estoque_minimo" type="number" min="0" step="1" required value="5"></label>
+      <label>Preço unitário (R$) <input name="preco_unitario" type="number" min="0" step="0.01" placeholder="0,00"></label>
+      <label class="estoque-largo">Observações <textarea name="observacoes" rows="3" placeholder="Informações adicionais"></textarea></label>
+    </div>
+    <p id="estoque-erro" role="alert"></p>
+    <div class="estoque-form-acoes"><button type="button" class="secundario" id="estoque-cancelar">Cancelar</button><button type="submit" id="estoque-salvar">Salvar medicamento</button></div>
+  </form>
+</dialog>
+
+    <script src="/static/script.js"></script>
+ 
+<!-- CARTEIRINHA DIGITAL DO PET -->
+<dialog id="dialog-carteirinha" class="dialog-carteirinha">
+    <div class="carteirinha-digital">
+
+        
+<div class="carteirinha-topo">
+    <div class="carteirinha-marca">
+        <img
+            src="/static/logo-redonda.png"
+            alt="Logo Vet Care"
+            class="carteirinha-logo"
+        >
+
+        <div>
+            <span>IDENTIDADE DIGITAL PET</span>
+            <h2>Vet Care</h2>
+            <p>Seu pet sempre identificado 🐾</p>
+        </div>
+    </div>
+</div>
+
+
+        <div class="carteirinha-corpo">
+            <span class="carteirinha-etiqueta">
+                CARTEIRINHA DO PACIENTE
+            </span>
+
+            
+<div class="carteirinha-foto-container">
+    <img
+        id="carteirinha-foto"
+        alt="Foto do animal"
+        class="carteirinha-foto"
+        hidden
+    >
+</div>
+
+<h2 id="carteirinha-nome">Nome do animal</h2>
+
+
+            <div class="carteirinha-dados">
+                <div>
+                    <small>Espécie</small>
+                    <strong id="carteirinha-especie">—</strong>
+                </div>
+
+                <div>
+                    <small>Raça</small>
+                    <strong id="carteirinha-raca">—</strong>
+                </div>
+
+                <div>
+                    <small>Sexo</small>
+                    <strong id="carteirinha-sexo">—</strong>
+                </div>
+
+                <div>
+                    <small>Identificação</small>
+                    <strong id="carteirinha-id">—</strong>
+                </div>
+            </div>
+
+            <div class="carteirinha-qr">
+                <img
+                    id="carteirinha-imagem-qr"
+                    alt="QR Code de identificação do animal"
+                    width="150"
+                    height="150"
+                    hidden
+             >
+
+            <p id="carteirinha-texto-qr">
+                Carregando QR Code...
+        </p>
+    </div>
+        </div>
+
+        <div class="carteirinha-rodape">
+            <span>Vet Care • Cuidado e identificação</span>
+        </div>
+    </div>
+
+    <div class="carteirinha-acoes">
+        <button type="button" id="imprimir-carteirinha">
+            Imprimir carteirinha
+        </button>
+
+        <button type="button" id="fechar-carteirinha"
+                class="secundario">
+            Fechar
+        </button>
+    </div>
+</dialog>
+
+</body>
+</html>
